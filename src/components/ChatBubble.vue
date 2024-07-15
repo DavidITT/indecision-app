@@ -22,7 +22,8 @@
   </div>
 
   <!-- Example Received Message -->
-  <div v-else class="flex">
+  <div v-else class="flex gap-2">
+    <img class="w-10 h-10 rounded-full border border-blue-300" src="/public/imgs/profile-photos/goku-profile.png" alt="Profile img">
     <div class="bg-gray-300 text-black p-2 rounded-lg max-w-xs relative">
       <svg class="absolute left-0 -ml-2 -bottom-1 h-full text-gray-300" width="9px" height="16px" viewBox="0 0 9 16"
            version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
