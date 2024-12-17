@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-4 flex items-center">
+  <div class="bg-white p-4 flex items-center sticky bottom-0 z-10">
     <input
         type="text"
         v-model="message"
