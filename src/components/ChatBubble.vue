@@ -2,8 +2,8 @@
 
   <!-- Example Message -->
   <div v-if="itsMine" class="flex justify-end">
-    <div class="bg-blue-200 text-black p-2 rounded-lg max-w-xs relative">
-      <svg class="absolute right-0 -mr-2 -bottom-1 h-full text-blue-200" width="9px" height="16px" viewBox="0 0 9 16"
+    <div :class="['bg-blue-200 text-black p-2 rounded-lg max-w-xs relative', { 'mark': highlighted }]">
+    <svg class="absolute right-0 -mr-2 -bottom-1 h-full text-blue-200" width="9px" height="16px" viewBox="0 0 9 16"
            version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="Tooltips-" transform="translate(-874.000000, -1029.000000)" fill="currentColor">
@@ -17,7 +17,7 @@
           </g>
         </g>
       </svg>
-      {{ message }}
+      <div v-html="highlightedMessage"></div>
     </div>
   </div>
 
@@ -39,26 +39,36 @@
           </g>
         </g>
       </svg>
-      <span class="capitalize">{{ message }}</span>
+      <div v-html="highlightedMessage"></div>
       <img v-if="image" :src="image" alt="YesNoImage" class="w-52 h-52 object-cover rounded-md">
     </div>
   </div>
-
-
 
 </template>
 
 <script setup lang="ts">
 
 
+import {useChat} from "@/composables/useChat";
+import {computed} from "vue";
+
 interface Props {
   message: string
   itsMine: boolean
   image?: string
+  highlighted?: boolean;
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
+const {searchQuery} = useChat()
+
+const highlightedMessage = computed(() => {
+  if (!searchQuery.value) return props.message;
+  const escapedQuery = searchQuery.value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escapedQuery})`, 'gi');
+  return props.message.replace(regex, '<span class="bg-yellow-200">$1</span>');
+});
 
 </script>
 

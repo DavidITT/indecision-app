@@ -4,7 +4,7 @@
         type="text"
         v-model="message"
         @keypress.enter="sendMessage"
-        placeholder="Type your message..."
+        placeholder="Write your question, always end with a '?'"
         class="flex-1 border rounded-full px-4 py-2 focus:outline focus:outline-blue-400"
     />
 
@@ -40,17 +40,14 @@
 <script setup lang="ts">
 
 import {ref} from "vue";
+import {useChatStore} from "@/stores/useChatStore";
 
-const emits = defineEmits<{
-  sendMessage: [message: string]
-}>()
-
-const message = ref('')
-
+const message = ref<string>('')
+const store = useChatStore()
 
 const sendMessage = () => {
   if (!message.value) return
-  emits('sendMessage', message.value)
+  store.onMessage(message.value)
   message.value = ''
 }
 

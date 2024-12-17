@@ -1,32 +1,25 @@
 <template>
-  <div class="flex-1 overflow-y-auto p-4" ref="chatRef">
-    <div class="flex flex-col space-y-2">
+  <div class="flex-1 overflow-y-auto p-4 max-h-[calc(100vh-150px)]" ref="chatRef">
+  <div class="flex flex-col space-y-2">
       <ChatBubble v-for="message in messages"
                   :key="message.id"
                   v-bind="message"/>
-      <WritingMessage v-if="loader"/>
+      <WritingMessage v-if="loader === true"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import ChatBubble from "@/components/ChatBubble.vue";
-import type {ChatMessage} from "@/interfaces/chat-message.interface";
 import WritingMessage from "@/components/WritingMessage.vue";
-import {useChat} from "@/composables/useChat";
 import {ref, watch} from "vue";
+import {useChat} from "@/composables/useChat";
 
-interface Props {
-  messages: ChatMessage[]
-}
-
-const {messages} = defineProps<Props>()
-
-const {loader} = useChat()
+const {messages, loader} = useChat()
 
 const chatRef = ref<HTMLDivElement | null>()
 
-watch(messages, () => {
+watch(messages.value, () => {
   setTimeout(() => {
     chatRef.value?.scrollTo({
       top:chatRef.value?.scrollHeight,

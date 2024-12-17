@@ -1,6 +1,7 @@
 export interface ChatMessage {
-    id: number,
-    itsMine: boolean,
+    id: number
+    itsMine: boolean
     message: string
     image?: string
+    highlighted?: boolean;
 }
