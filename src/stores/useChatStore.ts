@@ -49,11 +49,17 @@ export const useChatStore = defineStore('chat', {
         },
 
         handleMenu: function (status: boolean) {
-            this.menuState = status;
+            this.menuState = status
         },
 
         handleSearch: function (status: boolean) {
             this.searchBar = status;
+            if (!status) {
+                this.searchQuery = ''
+                this.messages.forEach(msg => {
+                    msg.highlighted = false
+                });
+            }
         },
 
         clearChat: function () {
