@@ -1,9 +1,16 @@
 <template>
 
   <!-- Example Message -->
-  <div v-if="itsMine" class="flex justify-end">
-    <div :class="['bg-blue-200 text-black p-2 rounded-lg max-w-xs relative', { 'mark': highlighted }]">
-    <svg class="absolute right-0 -mr-2 -bottom-1 h-full text-blue-200" width="9px" height="16px" viewBox="0 0 9 16"
+  <div :id="String(id)"
+       v-if="itsMine"
+       :class="[
+      'flex justify-end transition-opacity duration-300 ease-in-out',
+      {'active': active }]">
+    <div :class="[
+        'bg-blue-200 text-black p-2 rounded-lg max-w-xs relative',
+        { 'bg-blue-200': highlighted }
+      ]">
+      <svg class="absolute right-0 -mr-2 -bottom-1 h-full text-blue-200" width="9px" height="16px" viewBox="0 0 9 16"
            version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g id="Tooltips-" transform="translate(-874.000000, -1029.000000)" fill="currentColor">
@@ -22,9 +29,16 @@
   </div>
 
   <!-- Example Received Message -->
-  <div v-else class="flex gap-2">
-    <img class="w-10 h-10 rounded-full border border-blue-300" src="/public/imgs/profile-photos/goku-profile.png" alt="Profile img">
-    <div class="bg-gray-300 text-black p-2 rounded-lg max-w-xs relative">
+  <div :id="String(id)"
+       v-else :class="[
+      'flex gap-2 transition-opacity duration-300 ease-in-out',
+       {'active': active }]">
+    <img class="w-10 h-10 rounded-full border border-blue-300" src="/public/imgs/profile-photos/goku-profile.png"
+         alt="Profile img">
+    <div :class="[
+        'bg-gray-300 text-black p-2 rounded-lg max-w-xs relative',
+        { 'bg-gray-300': highlighted }
+      ]">
       <svg class="absolute left-0 -ml-2 -bottom-1 h-full text-gray-300" width="9px" height="16px" viewBox="0 0 9 16"
            version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -53,10 +67,12 @@ import {useChat} from "@/composables/useChat";
 import {computed} from "vue";
 
 interface Props {
+  id: any,
   message: string
   itsMine: boolean
   image?: string
-  highlighted?: boolean;
+  highlighted?: boolean
+  active?: boolean
 }
 
 const props = defineProps<Props>()
@@ -74,4 +90,16 @@ const highlightedMessage = computed(() => {
 
 <style scoped>
 
+.active {
+  animation: blink 1.5s step-start infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    background-color: transparent ;
+  }
+  50% {
+    background-color: #e2e8f0;
+  }
+}
 </style>

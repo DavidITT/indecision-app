@@ -15,11 +15,12 @@ import WritingMessage from "@/components/WritingMessage.vue";
 import {ref, watch} from "vue";
 import {useChat} from "@/composables/useChat";
 
-const {messages, loader} = useChat()
+const {messages, loader, updateHighlightedMessages} = useChat()
 
 const chatRef = ref<HTMLDivElement | null>()
 
-watch(messages.value, () => {
+watch(() => messages.value.length, (newLength) => {
+  updateHighlightedMessages();
   setTimeout(() => {
     chatRef.value?.scrollTo({
       top:chatRef.value?.scrollHeight,

@@ -4,4 +4,5 @@ export interface ChatMessage {
     message: string
     image?: string
     highlighted?: boolean;
+    active: boolean;
 }
